@@ -7,11 +7,17 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRET,
 });
 
+if (!process.env.CLOUD_NAME || !process.env.CLOUD_API_KEY || !process.env.CLOUD_API_SECRET) {
+  console.warn(
+    "Cloudinary credentials are not set. Image uploads will fail — set CLOUD_NAME, CLOUD_API_KEY and CLOUD_API_SECRET in environment."
+  );
+}
+
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "wanderlust_DEV",
-    allowerdFormats: ["png", "jpg", "jpeg"], // supports promises as well
+    allowed_formats: ["png", "jpg", "jpeg"], // supports promises as well
     // public_id: (req, file) => "computed-filename-using-request",
   },
 });
